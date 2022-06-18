@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Reg Prototype</title>
+	<style>
+		html, body, div, span, applet, object, iframe,
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+		a, abbr, acronym, address, big, cite, code,
+		del, dfn, em, img, ins, kbd, q, s, samp,
+		small, strike, strong, sub, sup, tt, var,
+		b, u, i, center,
+		dl, dt, dd, ol, ul, li,
+		fieldset, form, label, legend,
+		table, caption, tbody, tfoot, thead, tr, th, td,
+		article, aside, canvas, details, embed, 
+		figure, figcaption, footer, header, hgroup, 
+		menu, nav, output, ruby, section, summary,
+		time, mark, audio, video {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 100%;
+			font: inherit;
+			vertical-align: baseline;
+		}
+		html, body{
+			width: 100%;
+			height: 100%;
+			font-family: 'Lato', sans-serif;
+			font-weight: 300;
+		}
+		/* HTML5 display-role reset for older browsers */
+		article, aside, details, figcaption, figure, 
+		footer, header, hgroup, menu, nav, section {
+			display: block;
+		}
+		.main-container{
+			height: 100%;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			flex-direction: column;
+		}
+		.form-outer-container{
+			width: 100%;
+			height: 220px;
+			position:relative;
+			overflow: hidden;
+			/* border: 1px solid black; */
+		}
+
+		.arrows{
+			position: absolute;
+			top: 50%;
+			right: 20%;
+			transform: translate(0, -50%);
+			z-index: 9999;
+			font-size: 20px;
+			cursor: pointer;
+		}
+
+		.transparency{
+			height: 90px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 999;
+			background: linear-gradient(to bottom,white 0%,rgba(255,255,255,.4) 79%,rgba(255,255,255,0) 69%);
+		}
+		.transparency.bottom-transparency{
+			top: auto;
+			bottom: 0;
+			background: linear-gradient(to top,white 0%,rgba(255,255,255,.4) 79%,rgba(255,255,255,0) 69%);
+		}
+		.visible-container{
+			z-index:99;
+			position: absolute;
+			width: 100%;
+			top: 75px;
+			left: 50%;
+			transform: translate(-50%, 0);
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			transition: all 0.5s ease;
+		}
+		.input-container{
+			width: 400px;
+			height: 60px;
+			display: flex;
+			align-items: flex-start;
+			justify-content: flex-start;
+			flex-direction: column;
+			margin-bottom: 20px;
+			overflow: hidden;
+		}
+
+		.input-container .error p{
+			font-size: 10px;
+			color: red;
+		}
+		.input-container label{
+			font-size: 14px;
+			padding-bottom: 3px;
+		}
+		.input-container .input{
+			height: 30px;
+			border: 1px solid #c9c9c9;
+			border-radius: 8px;
+			width: 100%;
+			box-sizing: border-box;
+			padding: 5px;
+		}
+		.input-container .input:focus,
+		.input-container .input:focus-visible{
+			border: 1px solid #c9c9c9;
+			outline: none;
+		}
+		.button-container{
+			padding-top: 20px;
+		}
+		.button{
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			padding: 8px 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;
+			border-radius: 50px;
+			-webkit-user-select: none;     
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		.shake{
+			animation: shake 0.5s;
+		}
+
+		@keyframes shake {
+			0% { transform: translate(1px, 1px) rotate(0deg); }
+			10% { transform: translate(-1px, -2px) rotate(-1deg); }
+			20% { transform: translate(-3px, 0px) rotate(1deg); }
+			30% { transform: translate(3px, 2px) rotate(0deg); }
+			40% { transform: translate(1px, -1px) rotate(1deg); }
+			50% { transform: translate(-1px, 2px) rotate(-1deg); }
+			60% { transform: translate(-3px, 1px) rotate(0deg); }
+			70% { transform: translate(3px, 1px) rotate(-1deg); }
+			80% { transform: translate(-1px, -1px) rotate(1deg); }
+			90% { transform: translate(1px, 2px) rotate(0deg); }
+			100% { transform: translate(1px, -2px) rotate(-1deg); }
+		}
+	</style>
+	<script>
+
+		window.onload = function() {
+			//document has loaded
+			let button = document.querySelector('.button');
+			const formOuterContainer = document.querySelector('.form-outer-container');
+			const formInnerContainer = document.querySelector('.visible-container');
+			const inputContainers = document.querySelectorAll('.input-container');
+			const arrowsContainer = document.getElementsByClassName("arrows")[0];
+			const topArrow = arrowsContainer.getElementsByClassName("top-arrow")[0];
+			const bottomArrow = arrowsContainer.getElementsByClassName("bottom-arrow")[0];
+			let transitioning = false;
+
+			const moveTopPos = (el, heightToMove, moveBackwards = false) => {
+				let was = getComputedStyle(el).top;
+				if (!moveBackwards){
+					el.style.top = `${getComputedStyle(el).top.split('px')[0] - heightToMove}px`
+					return;
+				}
+
+				el.style.top = `${Number(was.split('px')[0]) + Number(heightToMove)}px`;
+				// console.log(`top position is now: ${getComputedStyle(el).top.split('px')[0]}px, was: ${was}`)
+			}
+
+			const getStyleFromElement = (element) => {
+				let generalStyle = {};
+				const style = element.currentStyle || window.getComputedStyle(element);
+				generalStyle.height = element.offsetHeight;
+				generalStyle.width = element.offsetWidth;
+				generalStyle.margins = parseFloat(style.marginLeft) + parseFloat(style.marginRight) + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+				generalStyle.paddings = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+				return generalStyle;
+			}
+
+			const validateInput = (inputDiv, input) => {
+				const validation = {};
+				let value = input.value;
+				if (value.length < 3) {
+					validation.error = true;
+					validation.errortext = 'Input should be longer'
+					return validation;
+				}
+				if (inputDiv.contains(inputDiv.getElementsByClassName("error")[0])) {
+					inputDiv.getElementsByClassName("error")[0].remove();
+				}
+				return validation.error = false
+			}
+
+			const appendErrorClass = (inputDiv, errorMessage) => {
+				inputDiv.classList.add("shake");
+				let errorDiv = document.createElement('div');
+				errorDiv.className = 'error';
+				
+				if (!inputDiv.contains(inputDiv.getElementsByClassName("error")[0])) {
+					inputDiv.appendChild(errorDiv);
+				}
+				errorDiv.innerHTML ='';
+				errorDiv.innerHTML =`<p>${errorMessage}</p>`;
+				inputDiv.addEventListener('animationend', function() {
+					inputDiv.classList.remove("shake");
+				})
+			}
+
+			// button.addEventListener("click", () => {
+            // 	regTransition(formInnerContainer, inputContainers);
+       	 	// });
+				
+			const regTransition = (formContainer, inputContainers) => {
+
+				formContainer.ontransitionend = () => {
+					if (document.getElementsByClassName("current")[0].classList.contains('success-message-container')){
+						return;
+					} else {
+						document.getElementsByClassName("current")[0].getElementsByTagName('input')[0].focus();
+						transitioning = false;
+					}
+				};
+
+				if(transitioning) {
+					return;
+				}
+				
+				let currentInput = document.getElementsByClassName("input-container current")[0];
+				currentInput.getElementsByTagName('input')[0].readOnly = true;
+				const isValid = validateInput(currentInput, currentInput.getElementsByTagName('input')[0]);
+				if(isValid.error === true){
+					currentInput.getElementsByTagName('input')[0].readOnly = false;
+					appendErrorClass(currentInput, isValid.errortext);
+					return;
+				}
+				if (currentInput.nextElementSibling != null){
+					const currentInputStyles = getStyleFromElement(currentInput);
+					inputContainers.forEach(node => {
+						node.classList.remove("current");
+					});
+					currentInput.nextElementSibling.classList.add("current");
+					transitioning = true;
+					moveTopPos(formContainer, currentInputStyles.height + currentInputStyles.margins);
+				}
+			}
+
+			const regBackwardstransition = (formContainer, inputContainers) => {
+				inputContainers.forEach(node => {
+					node.getElementsByTagName('input')[0].readOnly = false;
+				});
+				formContainer.ontransitionend = () => {
+					console.log("trnasition ended");
+					transitioning = false;
+				};
+
+				if(transitioning) {
+					return;
+				}
+
+				let currentInput = document.getElementsByClassName("input-container current")[0];
+				if (currentInput.previousElementSibling != null){
+					const currentInputStyles = getStyleFromElement(currentInput);
+					console.log("currentInputStyles", currentInputStyles.height + currentInputStyles.margins)
+					inputContainers.forEach(node => {
+						node.classList.remove("current");
+					});
+					currentInput.previousElementSibling.classList.add("current");
+					transitioning = true;
+					moveTopPos(formContainer, currentInputStyles.height + currentInputStyles.margins, true);
+				}
+			}
+
+			//bind events
+
+			[bottomArrow, button].forEach((element)=>{
+				element.addEventListener('click', ()=>{
+					regTransition(formInnerContainer, inputContainers);
+				});
+			});
+			
+			//bind return key to inputs
+			inputContainers.forEach(node => {
+				node.addEventListener("keyup", function(event) {
+					event.preventDefault();
+					if (event.keyCode === 13) {
+						regTransition(formInnerContainer, inputContainers);
+					}
+				});
+			});
+
+
+			formOuterContainer.addEventListener("wheel", function(event) {
+				const delta = Math.sign(event.deltaY);
+				if (delta > 0) {
+					regTransition(formInnerContainer, inputContainers);
+				} else {
+					regBackwardstransition(formInnerContainer, inputContainers);
+				}
+			});
+
+
+			topArrow.addEventListener("click", () => {
+				regBackwardstransition(formInnerContainer, inputContainers);
+			});
+		};
+	</script>
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="form-outer-container">
+				<div class="arrows">
+					<div class="top-arrow">&#8593;</div>
+					<div class="bottom-arrow">&#8595;</div>
+				</div>
+				<div class="transparency top-transparency">
+				</div>
+				<div class="visible-container">
+					<div class="input-container current" data-type="name">
+						<label>First Name</label>
+						<input class="input" name="first-name" type="text">
+					</div>
+					<div class="input-container" data-type="name">
+						<label>Last Name</label>
+						<input class="input" name="last-name" type="text">
+					</div>
+					<div class="input-container" data-type="gender">
+						<label>Gender</label>
+						<input class="input" name="gender" type="text">
+					</div>
+					<div class="input-container" data-type="email">
+						<label>Email</label>
+						<input class="input" name="email" type="text">
+					</div>
+					<div class="input-container" data-type="phone number">
+						<label>Phone number</label>
+						<input class="input" name="phone" type="text">
+					</div>
+					<div class="input-container" data-type="address">
+						<label>Address</label>
+						<input class="input" name="address" type="text">
+					</div>
+					<div class="input-container" data-type="name">
+						<label>Username</label>
+						<input class="input" name="username" type="text">
+					</div>
+					<div class="input-container" data-type="password">
+						<label>Password</label>
+						<input class="input" name="password" type="text">
+					</div>
+					<div class="success-message-container">
+						<h2>Thanks for registering with us!</h2>
+					</div>
+				</div>
+				<div class="transparency bottom-transparency">
+				</div>
+			</div>
+			<div class="button-container">
+				<div class="button">
+					Continue
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
