@@ -1,4 +1,4 @@
-# [Registration form single visible input prototype ](https://scrollable-registration-form.vercel.app/)
+# [Registration form prototype with single visible input ](https://scrollable-registration-form.vercel.app/)
 
 This is a Registration Form prototype done with JavaScript. Unveil each field after having successfully completed the previous one. Simplify the sign-up process and enhance user interaction.
 
