@@ -6,6 +6,8 @@ This prototype has basic styling and validations applied at the moment.
 
 A live example can be found at [https://scrollable-registration-form.vercel.app/](https://scrollable-registration-form.vercel.app/)
 
+![Registartion Form Prototype](/screenshots/reg-form-screenshot.png?raw=true "Registartion Form revealing single input fields.")
+
 ## Getting Started
 
 First, clone or fork the repo
