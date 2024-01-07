@@ -138,6 +138,10 @@ section {
 		font-size: 28px;
 	}
 }
+.top-arrow,
+.bottom-arrow {
+	padding: 8px;
+}
 
 .transparency {
 	height: 90px;
