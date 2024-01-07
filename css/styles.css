@@ -1,16 +1,84 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -18,18 +86,28 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-html, body{
+html,
+body {
 	width: 100%;
 	height: 100%;
-	font-family: 'Lato', sans-serif;
+	font-family: "Lato", sans-serif;
 	font-weight: 300;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
 	display: block;
 }
-.main-container{
+.main-container {
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -37,16 +115,18 @@ footer, header, hgroup, menu, nav, section {
 	justify-content: center;
 	position: relative;
 	flex-direction: column;
+	@media (max-width: 768px) {
+		justify-content: flex-start;
+	}
 }
-.form-outer-container{
+.form-outer-container {
 	width: 100%;
 	height: 220px;
-	position:relative;
+	position: relative;
 	overflow: hidden;
-	/* border: 1px solid black; */
 }
 
-.arrows{
+.arrows {
 	position: absolute;
 	top: 50%;
 	right: 20%;
@@ -54,24 +134,27 @@ footer, header, hgroup, menu, nav, section {
 	z-index: 9999;
 	font-size: 20px;
 	cursor: pointer;
+	@media (max-width: 768px) {
+		font-size: 28px;
+	}
 }
 
-.transparency{
+.transparency {
 	height: 90px;
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	z-index: 999;
-	background: linear-gradient(to bottom,white 0%,rgba(255,255,255,.4) 79%,rgba(255,255,255,0) 69%);
+	background: linear-gradient(to bottom, white 0%, rgba(255, 255, 255, 0.4) 79%, rgba(255, 255, 255, 0) 69%);
 }
-.transparency.bottom-transparency{
+.transparency.bottom-transparency {
 	top: auto;
 	bottom: 0;
-	background: linear-gradient(to top,white 0%,rgba(255,255,255,.4) 79%,rgba(255,255,255,0) 69%);
+	background: linear-gradient(to top, white 0%, rgba(255, 255, 255, 0.4) 79%, rgba(255, 255, 255, 0) 69%);
 }
-.visible-container{
-	z-index:99;
+.visible-container {
+	z-index: 99;
 	position: absolute;
 	width: 100%;
 	top: 75px;
@@ -83,7 +166,7 @@ footer, header, hgroup, menu, nav, section {
 	align-items: center;
 	transition: all 0.5s ease;
 }
-.input-container{
+.input-container {
 	width: 400px;
 	height: 60px;
 	display: flex;
@@ -92,64 +175,90 @@ footer, header, hgroup, menu, nav, section {
 	flex-direction: column;
 	margin-bottom: 20px;
 	overflow: hidden;
+	@media (max-width: 768px) {
+		width: 45%;
+	}
 }
 
-.input-container .error p{
+.input-container .error p {
 	font-size: 10px;
 	color: red;
 }
-.input-container label{
-	font-size: 14px;
+.input-container label {
+	font-size: 12px;
 	padding-bottom: 3px;
 }
-.input-container .input{
+.input-container .input {
 	height: 30px;
-	border: 1px solid #c9c9c9;
-	border-radius: 8px;
+	border: 1px solid #e8e8e8;
+	border-radius: 5px;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 5px;
+	padding: 0 5px;
 }
 .input-container .input:focus,
-.input-container .input:focus-visible{
+.input-container .input:focus-visible {
 	border: 1px solid #c9c9c9;
 	outline: none;
 }
-.button-container{
+.button-container {
 	padding-top: 20px;
 }
-.button{
-	background-color: #4CAF50;
+.button {
+	background-color: #4caf50;
 	border: none;
 	color: white;
-	padding: 8px 20px;
+	padding: 6px 20px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
 	font-size: 16px;
+	line-height: 1em;
 	margin: 4px 2px;
 	cursor: pointer;
 	border-radius: 50px;
-	-webkit-user-select: none;     
+	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 }
 
-.shake{
+.shake {
 	animation: shake 0.5s;
 }
 
 @keyframes shake {
-	0% { transform: translate(1px, 1px) rotate(0deg); }
-	10% { transform: translate(-1px, -2px) rotate(-1deg); }
-	20% { transform: translate(-3px, 0px) rotate(1deg); }
-	30% { transform: translate(3px, 2px) rotate(0deg); }
-	40% { transform: translate(1px, -1px) rotate(1deg); }
-	50% { transform: translate(-1px, 2px) rotate(-1deg); }
-	60% { transform: translate(-3px, 1px) rotate(0deg); }
-	70% { transform: translate(3px, 1px) rotate(-1deg); }
-	80% { transform: translate(-1px, -1px) rotate(1deg); }
-	90% { transform: translate(1px, 2px) rotate(0deg); }
-	100% { transform: translate(1px, -2px) rotate(-1deg); }
+	0% {
+		transform: translate(1px, 1px) rotate(0deg);
+	}
+	10% {
+		transform: translate(-1px, -2px) rotate(-1deg);
+	}
+	20% {
+		transform: translate(-3px, 0px) rotate(1deg);
+	}
+	30% {
+		transform: translate(3px, 2px) rotate(0deg);
+	}
+	40% {
+		transform: translate(1px, -1px) rotate(1deg);
+	}
+	50% {
+		transform: translate(-1px, 2px) rotate(-1deg);
+	}
+	60% {
+		transform: translate(-3px, 1px) rotate(0deg);
+	}
+	70% {
+		transform: translate(3px, 1px) rotate(-1deg);
+	}
+	80% {
+		transform: translate(-1px, -1px) rotate(1deg);
+	}
+	90% {
+		transform: translate(1px, 2px) rotate(0deg);
+	}
+	100% {
+		transform: translate(1px, -2px) rotate(-1deg);
+	}
 }
