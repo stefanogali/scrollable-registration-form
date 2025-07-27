@@ -3,64 +3,103 @@
 	<head>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+			rel="stylesheet" />
 		<link rel="stylesheet" href="css/styles.css" />
 		<script src="js/script.js" defer></script>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content="Explore this alternative registration form prototype. Uncover each field dynamically for a personalized, intuitive sign-up journey. Simplify the process, enhance user interaction." />
+		<meta
+			name="description"
+			content="Explore this alternative registration form prototype. Uncover each field dynamically for a personalized, intuitive sign-up journey. Simplify the process, enhance user interaction." />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Scollable reveal inputs Regstration Form Prototype</title>
 	</head>
 	<body>
 		<div class="main-container">
-			<div class="form-outer-container">
-				<div class="arrows">
-					<div class="top-arrow">&#8593;</div>
-					<div class="bottom-arrow">&#8595;</div>
+			<div class="inner-container">
+				<div class="form-outer-container">
+					<h1>Create your account</h1>
+					<h3>Let’s get started!</h3>
+					<p class="login-switch">Already a member? Log in</p>
+					<div class="form-inner-container">
+						<div class="arrows">
+							<div class="top-arrow">&#8593;</div>
+							<div class="bottom-arrow">&#8595;</div>
+						</div>
+						<div class="transparency top-transparency"></div>
+						<div class="visible-container">
+							<div class="input-container current" data-type="name">
+								<label for="first-name">First Name</label>
+								<input
+									class="input"
+									id="first-name"
+									name="first-name"
+									type="text"
+									autocomplete="given-name" />
+							</div>
+							<div class="input-container" data-type="name">
+								<label for="last-name">Last Name</label>
+								<input
+									class="input"
+									id="last-name"
+									name="last-name"
+									type="text"
+									autocomplete="family-name" />
+							</div>
+							<div class="input-container" data-type="gender">
+								<label for="gender">Gender</label>
+								<input class="input" id="gender" name="gender" type="text" />
+							</div>
+							<div class="input-container" data-type="email">
+								<label for="email">Email</label>
+								<input class="input" id="email" name="email" type="email" autocomplete="email" />
+							</div>
+							<div class="input-container" data-type="phone number">
+								<label for="phone">Phone number</label>
+								<input class="input" id="phone" name="phone" type="tel" autocomplete="tel" />
+							</div>
+							<div class="input-container" data-type="address">
+								<label for="address">Address</label>
+								<input
+									class="input"
+									id="address"
+									name="address"
+									type="text"
+									autocomplete="street-address" />
+							</div>
+							<div class="input-container" data-type="name">
+								<label for="username">Username</label>
+								<input
+									class="input"
+									id="username"
+									name="username"
+									type="text"
+									autocomplete="username" />
+							</div>
+							<div class="input-container" data-type="password">
+								<label for="password">Password</label>
+								<input
+									class="input"
+									id="password"
+									name="password"
+									type="password"
+									autocomplete="new-password" />
+							</div>
+							<div class="success-message-container">
+								<h2>Thanks for registering with us!</h2>
+							</div>
+						</div>
+						<div class="transparency bottom-transparency"></div>
+					</div>
+					<div class="button-container">
+						<div class="button">Continue</div>
+					</div>
 				</div>
-				<div class="transparency top-transparency"></div>
-				<div class="visible-container">
-					<div class="input-container current" data-type="name">
-						<label>First Name</label>
-						<input class="input" name="first-name" type="text" />
-					</div>
-					<div class="input-container" data-type="name">
-						<label>Last Name</label>
-						<input class="input" name="last-name" type="text" />
-					</div>
-					<div class="input-container" data-type="gender">
-						<label>Gender</label>
-						<input class="input" name="gender" type="text" />
-					</div>
-					<div class="input-container" data-type="email">
-						<label>Email</label>
-						<input class="input" name="email" type="text" />
-					</div>
-					<div class="input-container" data-type="phone number">
-						<label>Phone number</label>
-						<input class="input" name="phone" type="text" />
-					</div>
-					<div class="input-container" data-type="address">
-						<label>Address</label>
-						<input class="input" name="address" type="text" />
-					</div>
-					<div class="input-container" data-type="name">
-						<label>Username</label>
-						<input class="input" name="username" type="text" />
-					</div>
-					<div class="input-container" data-type="password">
-						<label>Password</label>
-						<input class="input" name="password" type="text" />
-					</div>
-					<div class="success-message-container">
-						<h2>Thanks for registering with us!</h2>
-					</div>
-				</div>
-				<div class="transparency bottom-transparency"></div>
-			</div>
-			<div class="button-container">
-				<div class="button">Continue</div>
+				<div class="image-container"><img src="/images/dog.png" /></div>
 			</div>
 		</div>
 	</body>

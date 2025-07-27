@@ -107,6 +107,168 @@ nav,
 section {
 	display: block;
 }
+
+html {
+	font-size: 16px;
+}
+
+body {
+	font-family: "Kanit", sans-serif;
+	font-weight: false;
+	line-height: 1.65;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-weight: true;
+	line-height: 1.15;
+}
+h1,
+.text-size-h1 {
+	font-family: "Kanit", sans-serif;
+	font-weight: 700;
+	margin-top: 0;
+	font-size: 3.05em;
+}
+
+h2,
+.text-size-h2 {
+	font-size: 2.44em;
+}
+
+h3,
+.text-size-h3 {
+	font-size: 1.95em;
+}
+
+h4,
+.text-size-h4 {
+	font-size: 1.56em;
+}
+
+h5,
+.text-size-h5 {
+	font-size: 1.25em;
+}
+
+.text-caption {
+	font-size: 0.8em;
+}
+
+small,
+.text-small {
+	font-size: 0.64em;
+}
+.kanit-thin {
+	font-family: "Kanit", sans-serif;
+	font-weight: 100;
+	font-style: normal;
+}
+
+.kanit-extralight {
+	font-family: "Kanit", sans-serif;
+	font-weight: 200;
+	font-style: normal;
+}
+
+.kanit-light {
+	font-family: "Kanit", sans-serif;
+	font-weight: 300;
+	font-style: normal;
+}
+
+.kanit-regular {
+	font-family: "Kanit", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.kanit-medium {
+	font-family: "Kanit", sans-serif;
+	font-weight: 500;
+	font-style: normal;
+}
+
+.kanit-semibold {
+	font-family: "Kanit", sans-serif;
+	font-weight: 600;
+	font-style: normal;
+}
+
+.kanit-bold {
+	font-family: "Kanit", sans-serif;
+	font-weight: 700;
+	font-style: normal;
+}
+
+.kanit-extrabold {
+	font-family: "Kanit", sans-serif;
+	font-weight: 800;
+	font-style: normal;
+}
+
+.kanit-black {
+	font-family: "Kanit", sans-serif;
+	font-weight: 900;
+	font-style: normal;
+}
+
+.kanit-thin-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 100;
+	font-style: italic;
+}
+
+.kanit-extralight-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 200;
+	font-style: italic;
+}
+
+.kanit-light-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 300;
+	font-style: italic;
+}
+
+.kanit-regular-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 400;
+	font-style: italic;
+}
+
+.kanit-medium-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 500;
+	font-style: italic;
+}
+
+.kanit-semibold-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 600;
+	font-style: italic;
+}
+
+.kanit-bold-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 700;
+	font-style: italic;
+}
+
+.kanit-extrabold-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 800;
+	font-style: italic;
+}
+
+.kanit-black-italic {
+	font-family: "Kanit", sans-serif;
+	font-weight: 900;
+	font-style: italic;
+}
+
 .main-container {
 	height: 100%;
 	width: 100%;
@@ -115,15 +277,45 @@ section {
 	justify-content: center;
 	position: relative;
 	flex-direction: column;
+	padding: 0 10px;
+	box-sizing: border-box;
+	background: #e8faff;
+	background: linear-gradient(35deg, rgba(232, 250, 255, 1) 40%, rgba(209, 255, 232, 1) 100%);
 	@media (max-width: 768px) {
 		justify-content: flex-start;
 	}
+	@media (max-height: 600px) {
+		height: auto;
+	}
+}
+.inner-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .form-outer-container {
+	width: 100%;
+	height: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: white;
+	max-width: 550px;
+	border-radius: 45px;
+	padding: 60px;
+	min-height: 460px;
+	@media (max-width: 768px) {
+		background-color: transparent;
+	}
+}
+.form-inner-container {
 	width: 100%;
 	height: 220px;
 	position: relative;
 	overflow: hidden;
+	margin-top: 15px;
 }
 
 .arrows {
@@ -150,12 +342,38 @@ section {
 	left: 0;
 	width: 100%;
 	z-index: 999;
-	background: linear-gradient(to bottom, white 0%, rgba(255, 255, 255, 0.4) 79%, rgba(255, 255, 255, 0) 69%);
+	background: linear-gradient(
+		to bottom,
+		white 0%,
+		rgba(255, 255, 255, 0.4) 79%,
+		rgba(255, 255, 255, 0) 69%
+	);
+	@media (max-width: 768px) {
+		background: linear-gradient(
+			to bottom,
+			rgba(232, 250, 255, 1) 0%,
+			rgba(232, 250, 255, 0.4) 79%,
+			rgba(232, 250, 255, 0) 100%
+		);
+	}
 }
 .transparency.bottom-transparency {
 	top: auto;
 	bottom: 0;
-	background: linear-gradient(to top, white 0%, rgba(255, 255, 255, 0.4) 79%, rgba(255, 255, 255, 0) 69%);
+	background: linear-gradient(
+		to top,
+		white 0%,
+		rgba(255, 255, 255, 0.4) 79%,
+		rgba(255, 255, 255, 0) 69%
+	);
+	@media (max-width: 768px) {
+		background: linear-gradient(
+			to top,
+			rgba(232, 250, 255, 1) 0%,
+			rgba(232, 250, 255, 0.4) 79%,
+			rgba(232, 250, 255, 0) 100%
+		);
+	}
 }
 .visible-container {
 	z-index: 99;
@@ -171,17 +389,14 @@ section {
 	transition: all 0.5s ease;
 }
 .input-container {
-	width: 400px;
-	height: 60px;
+	width: 100%;
+	height: 75px;
 	display: flex;
 	align-items: flex-start;
 	justify-content: flex-start;
 	flex-direction: column;
 	margin-bottom: 20px;
 	overflow: hidden;
-	@media (max-width: 768px) {
-		width: 45%;
-	}
 }
 
 .input-container .error p {
@@ -193,12 +408,11 @@ section {
 	padding-bottom: 3px;
 }
 .input-container .input {
-	height: 30px;
 	border: 1px solid #e8e8e8;
-	border-radius: 5px;
+	border-radius: 40px;
 	width: 100%;
+	padding: 10px;
 	box-sizing: border-box;
-	padding: 0 5px;
 }
 .input-container .input:focus,
 .input-container .input:focus-visible {
@@ -208,17 +422,33 @@ section {
 .button-container {
 	padding-top: 20px;
 }
+.image-container {
+	height: 100%;
+	display: flex;
+	align-items: flex-end;
+	@media (max-width: 768px) {
+		display: none;
+	}
+	@media (max-height: 600px) {
+		display: none;
+	}
+}
+.image-container img {
+	max-width: 100%;
+	margin-left: -30px;
+}
 .button {
-	background-color: #4caf50;
+	background-color: #f66538;
+	width: 100%;
 	border: none;
 	color: white;
-	padding: 6px 20px;
+	padding: 10px 0;
 	text-align: center;
 	text-decoration: none;
+	text-transform: uppercase;
 	display: inline-block;
 	font-size: 16px;
 	line-height: 1em;
-	margin: 4px 2px;
 	cursor: pointer;
 	border-radius: 50px;
 	-webkit-user-select: none;
