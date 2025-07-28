@@ -1,158 +1,207 @@
-window.onload = function() {
-	//document has loaded
-	let button = document.querySelector('.button');
-	const formOuterContainer = document.querySelector('.form-outer-container');
-	const formInnerContainer = document.querySelector('.visible-container');
-	const inputContainers = document.querySelectorAll('.input-container');
-	const arrowsContainer = document.getElementsByClassName("arrows")[0];
-	const topArrow = arrowsContainer.getElementsByClassName("top-arrow")[0];
-	const bottomArrow = arrowsContainer.getElementsByClassName("bottom-arrow")[0];
+window.addEventListener("DOMContentLoaded", () => {
+	// Initialize all DOM elements
+	const elements = {
+		button: document.querySelector(".button"),
+		formOuterContainer: document.querySelector(".form-outer-container"),
+		formInnerContainer: document.querySelector(".visible-container"),
+		inputContainers: document.querySelectorAll(".input-container"),
+		topArrow: document.querySelector(".top-arrow"),
+		topTransparency: document.querySelector(".top-transparency"),
+		bottomTransparency: document.querySelector(".bottom-transparency"),
+	};
+
 	let transitioning = false;
 
-	const moveTopPos = (el, heightToMove, moveBackwards = false) => {
-		let was = getComputedStyle(el).top;
-		if (!moveBackwards){
-			el.style.top = `${getComputedStyle(el).top.split('px')[0] - heightToMove}px`
-			return;
-		}
+	// Utility functions
+	const moveTopPos = (element, heightToMove, moveBackwards = false) => {
+		const currentTop = parseInt(getComputedStyle(element).top) || 0;
+		const newTop = moveBackwards ? currentTop + heightToMove : currentTop - heightToMove;
+		element.style.top = `${newTop}px`;
+	};
 
-		el.style.top = `${Number(was.split('px')[0]) + Number(heightToMove)}px`;
-		// console.log(`top position is now: ${getComputedStyle(el).top.split('px')[0]}px, was: ${was}`)
-	}
+	const getElementDimensions = (element) => {
+		const style = window.getComputedStyle(element);
+		const parseStyleValues = (properties) => {
+			return properties.reduce((sum, prop) => sum + (parseFloat(style[prop]) || 0), 0);
+		};
 
-	const getStyleFromElement = (element) => {
-		let generalStyle = {};
-		const style = element.currentStyle || window.getComputedStyle(element);
-		generalStyle.height = element.offsetHeight;
-		generalStyle.width = element.offsetWidth;
-		generalStyle.margins = parseFloat(style.marginLeft) + parseFloat(style.marginRight) + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-		generalStyle.paddings = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
-		return generalStyle;
-	}
+		return {
+			height: element.offsetHeight,
+			width: element.offsetWidth,
+			margins: parseStyleValues(["marginLeft", "marginRight", "marginTop", "marginBottom"]),
+			marginBottom: parseFloat(style.marginBottom) || 0,
+		};
+	};
 
 	const validateInput = (inputDiv, input) => {
-		const validation = {};
-		let value = input.value;
-		if (value.length < 3) {
-			validation.error = true;
-			validation.errortext = 'Input should be longer'
-			return validation;
-		}
-		if (inputDiv.contains(inputDiv.getElementsByClassName("error")[0])) {
-			inputDiv.getElementsByClassName("error")[0].remove();
-		}
-		return validation.error = false
-	}
+		const value = input.value.trim();
 
-	const appendErrorClass = (inputDiv, errorMessage) => {
+		if (value.length < 3) {
+			return {
+				error: true,
+				errorText: "Input should be longer",
+			};
+		}
+
+		// Remove existing error if validation passes
+		const existingError = inputDiv.querySelector(".error");
+		if (existingError) {
+			existingError.remove();
+		}
+
+		return { error: false };
+	};
+
+	const showError = (inputDiv, errorMessage) => {
 		inputDiv.classList.add("shake");
-		let errorDiv = document.createElement('div');
-		errorDiv.className = 'error';
-		
-		if (!inputDiv.contains(inputDiv.getElementsByClassName("error")[0])) {
+
+		let errorDiv = inputDiv.querySelector(".error");
+		if (!errorDiv) {
+			errorDiv = document.createElement("div");
+			errorDiv.className = "error";
 			inputDiv.appendChild(errorDiv);
 		}
-		errorDiv.innerHTML ='';
-		errorDiv.innerHTML =`<p>${errorMessage}</p>`;
-		inputDiv.addEventListener('animationend', function() {
-			inputDiv.classList.remove("shake");
-		})
-	}
 
-	// button.addEventListener("click", () => {
-	// 	regTransition(formInnerContainer, inputContainers);
-		// });
-		
-	const regTransition = (formContainer, inputContainers) => {
+		errorDiv.innerHTML = `<p>${errorMessage}</p>`;
 
-		formContainer.ontransitionend = () => {
-			if (document.getElementsByClassName("current")[0].classList.contains('success-message-container')){
-				return;
-			} else {
-				document.getElementsByClassName("current")[0].getElementsByTagName('input')[0].focus();
-				transitioning = false;
-			}
-		};
+		// Remove shake class after animation
+		inputDiv.addEventListener(
+			"animationend",
+			() => {
+				inputDiv.classList.remove("shake");
+			},
+			{ once: true }
+		);
+	};
 
-		if(transitioning) {
-			return;
-		}
-		
-		let currentInput = document.getElementsByClassName("input-container current")[0];
-		currentInput.getElementsByTagName('input')[0].readOnly = true;
-		const isValid = validateInput(currentInput, currentInput.getElementsByTagName('input')[0]);
-		if(isValid.error === true){
-			currentInput.getElementsByTagName('input')[0].readOnly = false;
-			appendErrorClass(currentInput, isValid.errortext);
-			return;
-		}
-		if (currentInput.nextElementSibling != null){
-			const currentInputStyles = getStyleFromElement(currentInput);
-			inputContainers.forEach(node => {
-				node.classList.remove("current");
-			});
-			currentInput.nextElementSibling.classList.add("current");
-			transitioning = true;
-			moveTopPos(formContainer, currentInputStyles.height + currentInputStyles.margins);
-		}
-	}
+	const getCurrentInput = () => {
+		return document.querySelector(".input-container.current");
+	};
 
-	const regBackwardstransition = (formContainer, inputContainers) => {
-		inputContainers.forEach(node => {
-			node.getElementsByTagName('input')[0].readOnly = false;
-		});
-		formContainer.ontransitionend = () => {
-			console.log("trnasition ended");
+	const handleTransitionEnd = () => {
+		const currentElement = document.querySelector(".current");
+
+		if (currentElement?.classList.contains("success-message-container")) {
 			transitioning = false;
-		};
-
-		if(transitioning) {
 			return;
 		}
 
-		let currentInput = document.getElementsByClassName("input-container current")[0];
-		if (currentInput.previousElementSibling != null){
-			const currentInputStyles = getStyleFromElement(currentInput);
-			console.log("currentInputStyles", currentInputStyles.height + currentInputStyles.margins)
-			inputContainers.forEach(node => {
-				node.classList.remove("current");
-			});
-			currentInput.previousElementSibling.classList.add("current");
-			transitioning = true;
-			moveTopPos(formContainer, currentInputStyles.height + currentInputStyles.margins, true);
+		const currentInput = currentElement?.querySelector("input");
+		if (currentInput) {
+			currentInput.focus();
 		}
-	}
 
-	//bind events
+		transitioning = false;
+	};
 
-	[bottomArrow, button].forEach((element)=>{
-		element.addEventListener('click', ()=>{
-			regTransition(formInnerContainer, inputContainers);
+	const performTransition = (fromInput, toInput, isBackward) => {
+		const dimensions = getElementDimensions(fromInput);
+
+		// Update current class
+		elements.inputContainers.forEach((container) => {
+			container.classList.remove("current");
 		});
-	});
-	
-	//bind return key to inputs
-	inputContainers.forEach(node => {
-		node.addEventListener("keyup", function(event) {
-			event.preventDefault();
-			if (event.keyCode === 13) {
-				regTransition(formInnerContainer, inputContainers);
+		toInput.classList.add("current");
+
+		transitioning = true;
+
+		// Set up transition end handler
+		elements.formInnerContainer.ontransitionend = handleTransitionEnd;
+
+		// Move the container
+		moveTopPos(
+			elements.formInnerContainer,
+			dimensions.height + dimensions.marginBottom,
+			isBackward
+		);
+	};
+
+	const transitionToNext = () => {
+		if (transitioning) return;
+
+		const currentInput = getCurrentInput();
+		if (!currentInput) return;
+
+		const input = currentInput.querySelector("input");
+		input.readOnly = true;
+
+		const validation = validateInput(currentInput, input);
+		if (validation.error) {
+			input.readOnly = false;
+			showError(currentInput, validation.errorText);
+			return;
+		}
+
+		const nextSibling = currentInput.nextElementSibling;
+		if (!nextSibling) return;
+
+		performTransition(currentInput, nextSibling, false);
+	};
+
+	const transitionToPrevious = () => {
+		if (transitioning) return;
+
+		// Make all inputs editable
+		elements.inputContainers.forEach((container) => {
+			const input = container.querySelector("input");
+			if (input) input.readOnly = false;
+		});
+
+		const currentInput = getCurrentInput();
+		if (!currentInput) return;
+
+		const previousSibling = currentInput.previousElementSibling;
+		if (!previousSibling) return;
+
+		performTransition(currentInput, previousSibling, true);
+	};
+
+	// Event binding
+	const bindEvents = () => {
+		// Forward navigation
+		elements.button?.addEventListener("click", transitionToNext);
+
+		elements.topTransparency?.addEventListener("click", () => {
+			const currentInput = getCurrentInput();
+			const previousInput = currentInput?.previousElementSibling;
+
+			if (previousInput) {
+				transitionToPrevious();
 			}
 		});
-	});
 
+		elements.bottomTransparency?.addEventListener("click", () => {
+			const currentInput = getCurrentInput();
+			const nextInput = currentInput?.nextElementSibling;
 
-	formOuterContainer.addEventListener("wheel", function(event) {
-		const delta = Math.sign(event.deltaY);
-		if (delta > 0) {
-			regTransition(formInnerContainer, inputContainers);
-		} else {
-			regBackwardstransition(formInnerContainer, inputContainers);
-		}
-	});
+			if (nextInput) {
+				transitionToNext();
+			}
+		});
 
+		// Keyboard navigation
+		elements.inputContainers.forEach((container) => {
+			container.addEventListener("keyup", (event) => {
+				if (event.key === "Enter") {
+					event.preventDefault();
+					transitionToNext();
+				}
+			});
+		});
 
-	topArrow.addEventListener("click", () => {
-		regBackwardstransition(formInnerContainer, inputContainers);
-	});
-};
+		// Optional: Mouse wheel navigation
+		/*
+        elements.formOuterContainer?.addEventListener("wheel", (event) => {
+            const delta = Math.sign(event.deltaY);
+            if (delta > 0) {
+                transitionToNext();
+            } else {
+                transitionToPrevious();
+            }
+        });
+        */
+	};
+
+	// Initialize the form
+	bindEvents();
+});
