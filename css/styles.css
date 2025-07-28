@@ -360,6 +360,7 @@ small,
 	width: 100%;
 	z-index: 999;
 	background: rgba(255, 255, 255, 0.8);
+	cursor: pointer;
 	@media (max-width: 768px), (max-height: 600px) {
 		background: transparent;
 	}
